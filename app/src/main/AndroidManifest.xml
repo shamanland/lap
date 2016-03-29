@@ -1,4 +1,4 @@
-<manifest package="com.shamanland.unitypermissionshelper.example"
+<manifest package="com.shamanland.permissions.example"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.READ_CONTACTS"/>

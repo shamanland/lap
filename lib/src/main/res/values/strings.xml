@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="update_settings">Update settings</string>
+    <string name="continue_text">Continue</string>
+    <string name="could_not_continue_without_permissions">Couldn\'t continue without permissions</string>
+    <string name="permissions_required">Permissions required</string>
+</resources>
