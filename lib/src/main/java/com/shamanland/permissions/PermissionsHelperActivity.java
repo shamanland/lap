@@ -4,54 +4,52 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.widget.Toast;
-
-import static com.shamanland.permissions.PermissionsHelper.FLAG_SHOW_RATIONALE;
+import android.provider.Settings;
+import android.view.Window;
 
 @TargetApi(Build.VERSION_CODES.M)
 public class PermissionsHelperActivity extends Activity {
-    private String[] permissions;
-    private String[] rationale;
-    private int[] state;
-    private int[] flags;
+    private static final int RQ_REQUEST_PERMISSIONS = 1;
+    private static final int RQ_APP_INFO = 2;
 
-    public static Intent createIntent(Context context, String[] permissions, String[] rationale, int[] state, int[] flags) {
+    public static Intent createIntent(Context context, String[] permissions, String[] rationale, boolean[] grantState, boolean appInfo) {
         Intent r = new Intent(context, PermissionsHelperActivity.class);
-        r.putExtra("permissions", permissions);
-        r.putExtra("rationale", rationale);
-        r.putExtra("state", state);
-        r.putExtra("flags", flags);
+        r.putExtras(PermissionsHelperFragment.createArgs(permissions, rationale, grantState, appInfo));
         return r;
-    }
-
-    private void resolveArgs() {
-        Intent intent = getIntent();
-        permissions = intent.getStringArrayExtra("permissions");
-        rationale = intent.getStringArrayExtra("rationale");
-        state = intent.getIntArrayExtra("state");
-        flags = intent.getIntArrayExtra("flags");
     }
 
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-        resolveArgs();
 
-        if ((flags[0] & FLAG_SHOW_RATIONALE) == FLAG_SHOW_RATIONALE) {
-            // TODO show custom ui
-        } else {
-            // TODO request permissions
+        if (bundle == null) {
+            PermissionsHelperFragment fragment = new PermissionsHelperFragment();
+            fragment.setArguments(getIntent().getExtras());
+            fragment.show(getFragmentManager(), PermissionsHelperFragment.DIALOG_TAG);
         }
+    }
 
-        requestPermissions(permissions, 0);
+    public void onRequestPermissions(String[] permissions) {
+        requestPermissions(permissions, RQ_REQUEST_PERMISSIONS);
+    }
+
+    public void onOpenSettings() {
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.setData(Uri.fromParts("package", getPackageName(), null));
+        startActivityForResult(intent, RQ_APP_INFO);
+    }
+
+    public void onCancelled() {
+        finish();
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        Toast.makeText(this, "permissions result", Toast.LENGTH_SHORT).show();
+
     }
 }

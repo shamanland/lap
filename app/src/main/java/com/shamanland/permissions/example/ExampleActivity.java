@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.shamanland.permissions.PermissionsHelper;
 
 public class ExampleActivity extends AppCompatActivity {
-    private int[] permissionsState;
+    private boolean[] permissionsState;
 
     @Override
     protected void onResume() {
@@ -24,7 +24,7 @@ public class ExampleActivity extends AppCompatActivity {
                 "Storage is used for cache",
         };
 
-        permissionsState = PermissionsHelper.ensurePermissions(this, permissions, rationale, permissionsState);
+        permissionsState = PermissionsHelper.ensurePermissions(this, permissions, rationale);
         if (permissionsState == null) {
             // all permissions granted
         } else {

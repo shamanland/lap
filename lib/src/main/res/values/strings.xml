@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="update_settings">Update settings</string>
     <string name="continue_text">Continue</string>
     <string name="could_not_continue_without_permissions">Couldn\'t continue without permissions</string>
+    <string name="app_info">App info</string>
     <string name="permissions_required">Permissions required</string>
+    <string name="permissions_last_line_before_continue">Select \"Allow\" on the following screens to grant permissions.</string>
+    <string name="permissions_last_line_before_app_info">Select \"Permissions\" in App info to re-enable.</string>
 </resources>
