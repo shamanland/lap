@@ -8,14 +8,17 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.view.Window;
+
+import static com.shamanland.permissions.PermissionsHelper.ACTION_APP_INFO;
 
 @TargetApi(Build.VERSION_CODES.M)
 public class PermissionsHelperActivity extends Activity {
     private static final int RQ_REQUEST_PERMISSIONS = 1;
     private static final int RQ_APP_INFO = 2;
 
-    public static Intent createIntent(Context context, String[] permissions, String[] rationale, boolean[] grantState, boolean appInfo) {
+    public static Intent createIntent(Context context, String[] permissions, String[] rationale, boolean[] grantState, int action) {
+        boolean appInfo = (action & ACTION_APP_INFO) == ACTION_APP_INFO;
+
         Intent r = new Intent(context, PermissionsHelperActivity.class);
         r.putExtras(PermissionsHelperFragment.createArgs(permissions, rationale, grantState, appInfo));
         return r;

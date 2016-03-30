@@ -49,8 +49,7 @@ public class PermissionsHelper {
             return null;
         }
 
-        boolean appInfo = (action & ACTION_APP_INFO) == ACTION_APP_INFO;
-        Intent intent = PermissionsHelperActivity.createIntent(activity, permissions, rationale, grantState, appInfo);
+        Intent intent = PermissionsHelperActivity.createIntent(activity, permissions, rationale, grantState, action);
         activity.startActivityForResult(intent, requestCode);
 
         return grantState;
