@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.shamanland.permissions">
+    <!--
     <application>
         <activity android:name="com.shamanland.permissions.PermissionsHelperActivity"/>
     </application>
+    -->
 </manifest>

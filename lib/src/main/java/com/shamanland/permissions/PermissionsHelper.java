@@ -47,4 +47,13 @@ public class PermissionsHelper {
 
         return PermissionsHelperActivity.createIntent(activity, permissions, rationale, grantState, action);
     }
+
+    public static Activity unityActivity;
+    public static String[] unityPermissions;
+    public static String[] unityRationale;
+    public static Intent unityIntent;
+    public static boolean unityEnsure() {
+        unityIntent = ensurePermissions(unityActivity, unityPermissions, unityRationale);
+        return unityIntent == null;
+    }
 }
