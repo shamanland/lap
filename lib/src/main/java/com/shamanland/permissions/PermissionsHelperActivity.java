@@ -82,6 +82,7 @@ public class PermissionsHelperActivity extends Activity {
     }
 
     @Override
+    @SuppressWarnings("NullableProblems")
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
@@ -101,9 +102,9 @@ public class PermissionsHelperActivity extends Activity {
                 if (allGranted) {
                     setResult(RESULT_OK);
                 }
-
-                finish();
             }
+
+            finish();
         }
     }
 }

@@ -17,9 +17,9 @@ public class ExampleActivity extends AppCompatActivity {
     };
 
     String[] rationale = {
-            "Contacts permissions used for accessing leaderboard",
-            "Location is used for target ads",
-            "Storage is used for cache",
+            "\u2022 Contacts permissions used for accessing leaderboard",
+            "\u2022 Location is used for target ads",
+            "\u2022 Storage is used for cache",
     };
 
     boolean intention;
