@@ -1,34 +1,76 @@
 package com.shamanland.permissions.example;
 
 import android.Manifest;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Toast;
 
 import com.shamanland.permissions.PermissionsHelper;
 
 public class ExampleActivity extends AppCompatActivity {
-    private boolean[] permissionsState;
+    String[] permissions = {
+            Manifest.permission.READ_CONTACTS,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+    };
+
+    String[] rationale = {
+            "Contacts permissions used for accessing leaderboard",
+            "Location is used for target ads",
+            "Storage is used for cache",
+    };
+
+    boolean intention;
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    public void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
 
-        String[] permissions = {
-                Manifest.permission.READ_CONTACTS,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        };
+        if (bundle != null) {
+            intention = bundle.getBoolean("intention");
+        }
 
-        String[] rationale = {
-                "Contacts permissions used for accessing leaderboard",
-                "Location is used for target ads",
-                "Storage is used for cache",
-        };
+        setContentView(R.layout.a_example);
 
-        permissionsState = PermissionsHelper.ensurePermissions(this, permissions, rationale);
-        if (permissionsState == null) {
-            // all permissions granted
+        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doSomething();
+            }
+        });
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+
+        bundle.putBoolean("intention", intention);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1) {
+            if (intention) {
+                doSomething();
+            }
+        }
+    }
+
+    protected void doSomething() {
+        Intent intent = PermissionsHelper.ensurePermissions(this, permissions, rationale);
+        if (intent == null) {
+            Toast.makeText(this, "You did something", Toast.LENGTH_SHORT).show();
+            intention = false;
+        } else if (intention) {
+            Toast.makeText(this, "Can't do something without permissions", Toast.LENGTH_SHORT).show();
+            intention = false;
         } else {
-            // new activity launched, wait for onResume() again
+            startActivityForResult(intent, 1);
+            intention = true;
         }
     }
 }

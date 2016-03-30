@@ -34,11 +34,7 @@ public class PermissionsHelper {
         return result;
     }
 
-    public static boolean[] ensurePermissions(Activity activity, String[] permissions, String[] rationale) {
-        return ensurePermissions(activity, 0, permissions, rationale);
-    }
-
-    public static boolean[] ensurePermissions(Activity activity, int requestCode, String[] permissions, String[] rationale) {
+    public static Intent ensurePermissions(Activity activity, String[] permissions, String[] rationale) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return null;
         }
@@ -49,9 +45,6 @@ public class PermissionsHelper {
             return null;
         }
 
-        Intent intent = PermissionsHelperActivity.createIntent(activity, permissions, rationale, grantState, action);
-        activity.startActivityForResult(intent, requestCode);
-
-        return grantState;
+        return PermissionsHelperActivity.createIntent(activity, permissions, rationale, grantState, action);
     }
 }
